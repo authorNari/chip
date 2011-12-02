@@ -1,38 +1,59 @@
-# Chips: For easy access to micro Ruby library on the Web
+# Chip: For easy access to micro Ruby library on a Web page
 
-Chips is a micro program manager for Ruby.
+Chip is a micro program manager for Ruby.
 
 ## Installation
 
 Requires ruby and rubygems. Install as a gem:
 
-  gem install chips
+  gem install chip
 
 ## Usage
-If you want to execute the micro program on [this page](https://raw.github.com/gist/1415921):
+
+### Run
+If you want to run the micro program on [this page](https://raw.github.com/gist/1415921):
 
   puts "Hello, world!"
 
-you can install it by the chip command:
+you can run it by the chip command:
 
-  $ chip install https://raw.github.com/gist/1415921
-
-You can use it as following code:
-
-  require "rubygems"
-  require "chips"
-  require_chip "https://raw.github.com/gist/1415921"
-  
-  $ ruby a.rb
-  Hello, world!
-
-or, you can install target program when you haven't installed it:
-
-  $ ruby hello_world.rb
+  $ chip run https://raw.github.com/gist/1415921
   Installing...
   https://raw.github.com/gist/1415921
   ---
   puts "Hello, world!"
   ---
   Do you install above a chip program? [yes/no] > yes
-  Hello, world!
+  Do you run?[yes/no] > yes
+  puts "Hello, world!"
+
+### Install
+If you created a awesome monky patch as [this page](https://raw.github.com/gist/1417282):
+
+  class Fixnum
+    def hour; self * 60 * 60; end
+  end
+
+You can use it as following code:
+
+  require "rubygems"
+  require "chip"
+  require_chip "https://raw.github.com/gist/1417282"
+  
+  puts 1.hour
+  
+  $ ruby a.rb
+  3600
+
+You can install target program when you haven't installed it:
+
+  $ ruby h.rb
+  Installing...
+  https://raw.github.com/gist/1417282
+  ---
+  class Fixnum
+    def hour; self * 60 * 60; end
+  end
+  ---
+  Do you install above a chip program? [yes/no] > yes
+  3600
