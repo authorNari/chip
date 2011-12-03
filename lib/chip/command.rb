@@ -3,12 +3,7 @@ require "net/https"
 
 module Chip
   class Command
-    attr_accessor :config
     attr_writer :force
-
-    def initialize
-      @config = nil
-    end
 
     def install(url)
       puts "Installing..."

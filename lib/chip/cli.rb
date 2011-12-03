@@ -19,6 +19,7 @@ module Chip
         end
       end
     end
+    attr_reader :command
 
     def run(args)
       args = parse_args!(args)

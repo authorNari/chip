@@ -16,13 +16,18 @@ module Chip
                       doc.xpath('//pre').map do |pre|
                         t = pre.text
                         lines = t.split("\n")
-                        if lines.first.include?("chip")
-                          return t
+                        is_chip = lines.inject(false) do |r, l|
+                          if l != nil && !l.gsub(" ", "").empty?
+                            break true if l.include?("chip")
+                            break false
+                          end
                         end
+                        return t if is_chip
                         return false
                       end
                     }]
     end
+    attr_reader :fetchers
 
     def add(url, content_type, &inspector)
       @fetchers.unshift([url, content_type, inspector])
