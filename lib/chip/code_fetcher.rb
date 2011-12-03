@@ -29,13 +29,12 @@ module Chip
     end
 
     def fetch(target_url)
-      http_get(target_url) do |response|
-        @fetchers.each do |url, content_type, inspector|
-          if target_url.match(url) && response.content_type.match(content_type)
-            if res = inspector.call(response: response,
-                                    url: target_url)
-              return res
-            end
+      response = http_get(target_url)
+      @fetchers.each do |url, content_type, inspector|
+        if target_url.match(url) && response.content_type.match(content_type)
+          if res = inspector.call(response: response,
+                                  url: target_url)
+            return res
           end
         end
       end
@@ -43,16 +42,19 @@ module Chip
     end
 
     private
-    def http_get(url)
+    def http_get(url, limit=10)
+      raise FetchError, 'http redirect too deep' if limit == 0
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = (uri.scheme == "https")
-      http.start do |h|
-        res = http.get(uri.path)
-        if res.code != "200"
-          raise FetchError, "#{url} response code is #{res.code}"
-        end
-        return yield res
+      res = http.start{|h| h.get(uri.path)}
+      case res
+      when Net::HTTPSuccess
+        return res
+      when Net::HTTPRedirection
+        return http_get(res['Location'], limit - 1)
+      else
+        raise FetchError, "#{url} response code is #{res.code}"
       end
     end
   end
