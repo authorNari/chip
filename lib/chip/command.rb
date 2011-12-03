@@ -1,6 +1,5 @@
 require "uri"
 require "net/https"
-require "fileutils"
 
 module Chip
   class Command
@@ -67,7 +66,7 @@ EOF
 
     private
     def install_dir(dir=nil)
-      dir = File.expand_path("~/.chip") if dir.nil?
+      dir = File.expand_path("~/.chip.d") if dir.nil?
       if not File.exist?(dir)
         FileUtils.mkdir_p(dir)
         File.chmod(0700, dir)

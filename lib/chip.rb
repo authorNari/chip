@@ -2,6 +2,15 @@ module Chip
   class InstallError < StandardError; end
   class FetchError < InstallError; end
 
+  def self.setup
+    config = File.expand_path("~/.chip")
+    if not File.exist?(config)
+      FileUtils.touch(config)
+      File.chmod(0600, config)
+    end
+    eval(File.read(config))
+  end
+
   def self.fetcher
     @fetcher ||= CodeFetcher.new
   end
@@ -20,8 +29,11 @@ module Chip
 end
 
 require 'optparse'
+require "fileutils"
 require_relative "chip/version"
 require_relative "chip/code_fetcher"
 require_relative "chip/command"
 require_relative "chip/cli"
 require_relative "chip/core_ext_kernel"
+
+Chip.setup

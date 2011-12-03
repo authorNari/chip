@@ -7,12 +7,12 @@ module Chip
       # text/plain
       @fetchers << [/.*/,
                     "text/plain",
-                    ->(r){ r.body }]
+                    ->(opts){ opts[:response].body }]
       # text/html <pre>#chip\n puts 'hello, world!'</pre>
       @fetchers << [/.*/,
                     "text/html",
-                    ->(r){ 
-                      doc = Nokogiri::HTML::Document.parse(r.body)
+                    ->(opts){ 
+                      doc = Nokogiri::HTML::Document.parse(opts[:response].body)
                       doc.xpath('//pre').map do |pre|
                         t = pre.text
                         lines = t.split("\n")
@@ -32,7 +32,8 @@ module Chip
       http_get(target_url) do |response|
         @fetchers.each do |url, content_type, inspector|
           if target_url.match(url) && response.content_type.match(content_type)
-            if res = inspector.call(response)
+            if res = inspector.call(response: response,
+                                    url: target_url)
               return res
             end
           end

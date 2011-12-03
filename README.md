@@ -2,6 +2,11 @@
 
 Chip is a micro program manager for Ruby.
 
+## Featrues
+
+  * Run and install a micro program on some Web page.
+  * Chip can extend by Chip.
+
 ## Installation
 
 Requires ruby and rubygems. Install as a gem:
@@ -10,23 +15,6 @@ Requires ruby and rubygems. Install as a gem:
 
 ## Usage
 
-### Run
-If you want to run the micro program on [this page](https://raw.github.com/gist/1415921):
-
-    puts "Hello, world!"
-
-you can run it by the chip command:
-
-    $ chip run https://raw.github.com/gist/1415921
-    Installing...
-    https://raw.github.com/gist/1415921
-    ---
-    puts "Hello, world!"
-    ---
-    Do you install above a chip program? [yes/no] > yes
-    Do you run?[yes/no] > yes
-    puts "Hello, world!"
-
 ### Install
 If you created a awesome monky patch as [this page](https://raw.github.com/gist/1417282):
 
@@ -34,26 +22,56 @@ If you created a awesome monky patch as [this page](https://raw.github.com/gist/
       def hour; self * 60 * 60; end
     end
 
-You can use it as following code:
+you can install it:
 
-    require "rubygems"
-    require "chip"
+    $ chip install https://raw.github.com/gist/1417282
+
+And, you can use it as following code:
+
+    # a.rb
     require_chip "https://raw.github.com/gist/1417282"
     
     puts 1.hour
 
-    $ ruby a.rb
+    $ ruby -rubygems -rchip a.rb
     3600
 
-You can install target program when you haven't installed it:
+#### Dynamic install
 
-    $ ruby h.rb
+    # a.rb
+    require_chip "https://raw.github.com/gist/1425982"
+    
+    puts 1.minute
+
+    $ ruby -rubygems -rchip a.rb
     Installing...
-    https://raw.github.com/gist/1417282
+    /path/to/.chip.d/https:__raw.github.com_gist_1425982.rb
     ---
     class Fixnum
-      def hour; self * 60 * 60; end
+      def minute; self * 60; end
     end
     ---
-    Do you install above a chip program? [yes/no] > yes
-    3600
+    Do you install above a program? [yes/no] > yes
+    60
+
+### Run
+
+If a web page has a pre tag that first line is included `chip',
+
+    #chip
+    puts "*** Hello, chip!! ***"
+
+you can run it by the chip command!!:
+
+    $ chip run https://github.com/authorNari/chip -f
+    *** Hello, chip!! ***
+
+## Extend micro code fetcher by Chip
+
+TODO
+
+Example fetcher: [Twitter status fetcher](/wiki/Twitter-status-fetcher)
+
+## Copyright
+
+Copyright (c) 2011 nari. See MIT-LICENSE for further details.
