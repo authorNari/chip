@@ -59,12 +59,17 @@ And, you can use it as following code:
 If a web page has a pre tag that first line is included `chip',
 
     #chip
-    puts "*** Hello, chip!! ***"
+    
+      eval(    %w|   put   s("   H34259el
+    l0     o6  ,_4   C52   h0i   98    62
+    63         0p2455!!2   952   0".gsub
+    (/     \\  d/,   '')   .tr   ("
+      _",32   .chr   ))|   *''   )#
 
 you can run it by the chip command!!:
 
     $ chip run https://github.com/authorNari/chip -f
-    *** Hello, chip!! ***
+    Hello, Chip!!
 
 ## Extend micro code fetcher by Chip
 
