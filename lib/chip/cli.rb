@@ -26,7 +26,7 @@ module Chip
       @command.send(method, *args)
     rescue ArgumentError
       @command.send(:help)
-    rescue Command::InstallError => ex
+    rescue InstallError => ex
       puts ex.message
     end
 

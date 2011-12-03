@@ -7,16 +7,13 @@ module Chip
     attr_accessor :config
     attr_writer :force
 
-    class InstallError < StandardError; end
-    class HTTPFetchError < InstallError; end
-
     def initialize
       @config = nil
     end
 
     def install(url)
       puts "Installing..."
-      code = fetch(url)
+      code = ::Chip.fetcher.fetch(url)
       fn = install_filepath(url)
 
       unless @force
@@ -39,8 +36,8 @@ module Chip
       unless @force
         print "Do you run it? [yes/no] > "
       end
-      puts "Running..."
       if @force or ask == "yes"
+        puts "Running..."
         eval(File.read(install_filepath(url)))
       end
     end
@@ -69,21 +66,6 @@ EOF
     end
 
     private
-    def fetch(url)
-      code = ""
-      uri = URI.parse(url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = (uri.scheme == "https")
-      http.start do |h|
-        res = http.get(uri.path)
-        if res.code != "200"
-          raise HTTPFetchError, "#{url} response code is #{res.code}"
-        end
-        code = res.body
-      end
-      return code
-    end
-
     def install_dir(dir=nil)
       dir = File.expand_path("~/.chip") if dir.nil?
       if not File.exist?(dir)
