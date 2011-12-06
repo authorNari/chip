@@ -58,7 +58,7 @@ And, you can use it as following code:
 
 ### Run
 
-If a web page has a pre tag that first line is included `chip',
+If a web page has a pre tag that first line is included `#chip`,
 
     #chip
     
