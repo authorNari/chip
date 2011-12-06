@@ -29,21 +29,23 @@ you can install it:
 And, you can use it as following code:
 
     # a.rb
+    require "chip"
     require_chip "https://raw.github.com/gist/1417282"
     
     puts 1.hour
 
-    $ ruby -rubygems -rchip a.rb
+    $ ruby a.rb
     3600
 
 #### Dynamic install
 
     # a.rb
+    require "chip"
     require_chip "https://raw.github.com/gist/1425982"
     
     puts 1.minute
 
-    $ ruby -rubygems -rchip a.rb
+    $ ruby a.rb
     Installing...
     /path/to/.chip.d/https:__raw.github.com_gist_1425982.rb
     ---
@@ -60,11 +62,11 @@ If a web page has a pre tag that first line is included `chip',
 
     #chip
     
-      eval(    %w|   put   s("   H34259el
-    l0     o6  ,_4   C52   h0i   98    62
-    63         0p2455!!2   952   0".gsub
-    (/     \\  d/,   '')   .tr   ("
-      _",32   .chr   ))|   *''   )#
+      eval(     %w|   put   s("   H3429el
+    l0     o6   ,_4   C52   h0i   98    62
+    63          0p2455!!2   952   0".gsub
+    (/     \\   d/,   '')   .tr   ("
+      _",32    .chr   ))|   *''   )#
 
 you can run it by the chip command!!:
 
