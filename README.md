@@ -77,7 +77,7 @@ you can run it by the chip command!!:
 
 TODO
 
-Example fetcher: [Twitter status fetcher](/wiki/Twitter-status-fetcher)
+Example fetcher: [Twitter status fetcher](wiki/Twitter-status-fetcher)
 
 ## Copyright
 
