@@ -21,6 +21,15 @@ class TestCodeFetcher < Test::Unit::TestCase
     assert_equal "\n\n#chip\nputs 'Hi'", @fetcher.fetch("http://test.com/a.rb")
   end
 
+  def test_fetch_with_html_have_many_pre
+    FakeWeb.register_uri(:get, "http://test.com/a.rb",
+                         body: "<pre>invalid</pre>" +
+                               "<pre>\n\n#chip\nputs 'Hi'</pre>",
+                         content_type: "text/html")
+
+    assert_equal "\n\n#chip\nputs 'Hi'", @fetcher.fetch("http://test.com/a.rb")
+  end
+
   def test_add
     assert_equal 2, @fetcher.fetchers.size
     @fetcher.add("test_url", "text/plain"){}

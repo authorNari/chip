@@ -16,15 +16,17 @@ module Chip
                       doc.xpath('//pre').map do |pre|
                         t = pre.text
                         lines = t.split("\n")
-                        is_chip = lines.inject(false) do |r, l|
-                          if l != nil && !l.gsub(" ", "").empty?
-                            break true if l.include?("chip")
-                            break false
+                        lines.each do |l|
+                          if l != nil
+                            l = l.gsub(" ", "")
+                            if !l.empty?
+                              return t if l.include?("#chip")
+                              break
+                            end
                           end
                         end
-                        return t if is_chip
-                        return false
                       end
+                      return false
                     }]
     end
     attr_reader :fetchers
